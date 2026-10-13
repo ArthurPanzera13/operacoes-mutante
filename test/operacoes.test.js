@@ -74,3 +74,114 @@ describe('Suíte de Testes Fraca para 50 Operações Aritméticas', () => {
   test('49. deve calcular o triplo de um número', () => { expect(triplo(10)).toBe(30); });
   test('50. deve calcular a metade de um número', () => { expect(metade(20)).toBe(10); });
 });
+
+describe('Testes adicionados para matar mutantes sobreviventes', () => {
+  test('divisao lança erro com a mensagem correta', () => {
+    expect(() => divisao(5, 0)).toThrow('Divisão por zero não é permitida.');
+  });
+  test('inverso de zero lança erro com a mensagem correta', () => {
+    expect(() => inverso(0)).toThrow('Não é possível inverter o número zero.');
+  });
+
+  test('raizQuadrada de 0 é 0 (fronteira de n < 0)', () => {
+    expect(raizQuadrada(0)).toBe(0);
+  });
+  test('raizQuadrada de número negativo lança erro', () => {
+    expect(() => raizQuadrada(-4))
+      .toThrow('Não é possível calcular a raiz quadrada de um número negativo.');
+  });
+
+  test('fatorial de 0 e de 1 é 1 (fronteira de n < 0)', () => {
+    expect(fatorial(0)).toBe(1);
+    expect(fatorial(1)).toBe(1);
+  });
+  test('fatorial de número negativo lança erro', () => {
+    expect(() => fatorial(-1)).toThrow('Fatorial não é definido para números negativos.');
+  });
+
+  test('mediaArray de array vazio retorna 0 (e não NaN)', () => {
+    expect(mediaArray([])).toBe(0);
+  });
+
+  test('maximoArray de array vazio lança erro', () => {
+    expect(() => maximoArray([])).toThrow('Array vazio не possui valor máximo.');
+  });
+  test('minimoArray de array vazio lança erro', () => {
+    expect(() => minimoArray([])).toThrow('Array vazio не possui valor mínimo.');
+  });
+
+  test('isPar retorna false para número ímpar', () => {
+    expect(isPar(7)).toBe(false);
+  });
+  test('isImpar retorna false para números pares (inclusive 0)', () => {
+    expect(isImpar(4)).toBe(false);
+    expect(isImpar(0)).toBe(false);
+  });
+
+  test('isPrimo retorna false para 0, 1 e negativos', () => {
+    expect(isPrimo(1)).toBe(false);
+    expect(isPrimo(0)).toBe(false);
+    expect(isPrimo(-7)).toBe(false);
+  });
+  test('isPrimo retorna true para 2, o menor primo', () => {
+    expect(isPrimo(2)).toBe(true);
+  });
+  test('isPrimo retorna false para números compostos', () => {
+    expect(isPrimo(4)).toBe(false);
+    expect(isPrimo(9)).toBe(false);
+    expect(isPrimo(15)).toBe(false);
+  });
+
+  test('produtoArray de array vazio retorna 1 (elemento neutro)', () => {
+    expect(produtoArray([])).toBe(1);
+  });
+
+  test('clamp retorna o mínimo quando o valor está abaixo do intervalo', () => {
+    expect(clamp(-5, 0, 10)).toBe(0);
+  });
+  test('clamp retorna o máximo quando o valor está acima do intervalo', () => {
+    expect(clamp(15, 0, 10)).toBe(10);
+  });
+  test('clamp retorna o próprio valor quando ele é igual a um limite', () => {
+    expect(clamp(-0, 0, 10)).toBe(-0);
+    expect(clamp(0, -10, -0)).toBe(0);
+  });
+
+  test('isDivisivel retorna false quando não há divisão exata', () => {
+    expect(isDivisivel(10, 3)).toBe(false);
+  });
+
+  test('celsiusParaFahrenheit converte 100 °C em 212 °F', () => {
+    expect(celsiusParaFahrenheit(100)).toBe(212);
+  });
+  test('fahrenheitParaCelsius converte 212 °F em 100 °C', () => {
+    expect(fahrenheitParaCelsius(212)).toBe(100);
+  });
+
+  test('isMaiorQue retorna false para menor e para igual', () => {
+    expect(isMaiorQue(5, 10)).toBe(false);
+    expect(isMaiorQue(5, 5)).toBe(false);
+  });
+  test('isMenorQue retorna false para maior e para igual', () => {
+    expect(isMenorQue(10, 5)).toBe(false);
+    expect(isMenorQue(5, 5)).toBe(false);
+  });
+  test('isEqual retorna false para valores diferentes', () => {
+    expect(isEqual(7, 8)).toBe(false);
+  });
+
+  test('medianaArray de array vazio lança erro', () => {
+    expect(() => medianaArray([])).toThrow('Array vazio не possui mediana.');
+  });
+  test('medianaArray ordena numericamente um array desordenado (tamanho ímpar)', () => {
+    expect(medianaArray([30, 1, 20, 100, 5])).toBe(20);
+  });
+  test('medianaArray de array de tamanho par é a média dos dois centrais', () => {
+    expect(medianaArray([40, 10, 30, 20])).toBe(25);
+  });
+  test('medianaArray não altera o array original', () => {
+    const numeros = [3, 1, 2];
+    medianaArray(numeros);
+    expect(numeros).toEqual([3, 1, 2]);
+  });
+});
